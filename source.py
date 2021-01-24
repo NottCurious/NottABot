@@ -92,28 +92,35 @@ async def hystalk(ctx, username=''):
 @client.command()
 async def skillstalk(ctx, username=''):
 	if username == '':
+		print('Exiting Function, Invalid Username')
 		await ctx.send('Enter a Username and Try Again...')
 		return
 
 	mcuuid = sbstalk.getUUID(username)
 
 	if mcuuid == 'no':
+		print('Exiting Function, Player Doesn\'t Exist')
 		await ctx.send('Enter a Valid Username and Try Again...')
 		return
 
 	names = ['**Combat**', '**Foraging**', '**Farming**', '**Enchanting**', '**Alchemy**', '**Mining**', '**Fishing**']
 	levels, expremaining, exptoup = sbstalk.getSkills(mcuuid)
+	print('\nReceived Skills')
 
 	skill_avg = sbstalk.findSkillAverage(mcuuid)
+	print('\nFound Skill Average')
 
 	embedVar = discord.Embed(title='Skill Details', description='', color=0x00ff00) # Make this Look Better In the Future
 	embedVar.add_field(name='**Skill Average**', value=skill_avg, inline=False)	
-
+	print('Embed Created')
 
 	for i in range(len(levels)):
 		embedVar.add_field(name=names[i], value='Level: %d \n Progress Percent: %d' % (levels[i], round(expremaining[i]*100/exptoup[i], 2)) + f'%' + '\n %s / %s' % (numberformat.human_format(expremaining[i]), numberformat.human_format(exptoup[i])), inline=True)
+	print('Embed Fields Added')
 
 	await ctx.send(embed=embedVar)
+	print('Embed Sent')
+	print('\n')
 
 # Execute Commands
 client.run(BOTTOKEN)

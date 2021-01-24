@@ -13,12 +13,12 @@ api_key = os.getenv("API_KEY")
 
 # Getting UUID Using Mojang API
 def getUUID(username):
-	print("Receiving Mojang Player Data")
+	print("hypixel_stalking - getUUID: Receiving Mojang Player Data")
 	try:
 		playerdata_mojang = get("https://api.mojang.com/users/profiles/minecraft/%s" % (username)).json()
 	
 		uuid = playerdata_mojang["id"]
-		print("UUID Received")
+		print("hypixel_stalking - getUUID: UUID Received")
 
 		return uuid
 	except:
@@ -28,6 +28,8 @@ def getUUID(username):
 def check_status(uuid):
 	playerdata_status = get("https://api.hypixel.net/status?key=%s&uuid=%s" % (api_key, uuid)).json()
 
+	print('hypixel_stalking - check_status: Returning Status')
+	
 	return playerdata_status['session']['online']
 
 # Changing API Value to 'Online'/'Offline'
@@ -74,26 +76,28 @@ def stalkPerson(username):
 		return ['no']
 
 	p_status = check_status(player_uuid)
-	print('Got Status')
+	print('hypixel_stalking - stalkPerson: Got Status')
 	p_status = format_status(player_uuid)
-	print('Status Formatted')
+	print('hypixel_stalking - stalkPerson: Status Formatted')
 
 	p_guild = get_guild(player_uuid)
-	print('Got Guild')
+	print('hypixel_stalking - stalkPerson: Got Guild')
 
 	playerdata_hypixel = get("https://api.hypixel.net/player?key=%s&uuid=%s" % (api_key, player_uuid)).json()
 
 	username = playerdata_hypixel['player']['displayname']
 
 	p_karma = playerdata_hypixel['player']['karma']
-	print('Got Karma')
+	print('hypixel_stalking - stalkPerson: Got Karma')
 
 	p_rank = playerdata_hypixel['player']['newPackageRank']
-	print('Got Rank')
+	print('hypixel_stalking - stalkPerson: Got Rank')
 	p_rank = formatRank(p_rank)
-	print('Rank Formatted')
+	print('hypixel_stalking - stalkPerson: Rank Formatted')
 
 	details = [username, p_rank, p_status, p_guild, p_karma]
+	
+	print('hypixel_stalking - stalkPerson: Details Returned \n')
 	return details
 
 # print(stalkPerson(username))
