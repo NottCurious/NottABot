@@ -200,10 +200,10 @@ async def zslayer(ctx, username=''):
 
 	embedVar = discord.Embed(title='Zombie Slayer Details', description='', color=0x00ff00)
 
-	embedVar.add_field(name='**Tier Kills: **', value='T1 Kills: %d\n T2 Kills: %d\n T3 Kills: %d\n T4 Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
-	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %d\n Current Level: %d\n Percentage to Next Level: %s' % (current_exp, current_level, percentage_completion), inline=True)
+	embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
 	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
-	embedVar.add_field(name='**To Next Zombie Slayer Level: **', value='Exp Required: %d\n T4s Required: %d\n Money Required: %s\n' % (req_exp, t4r, money_req))
+	embedVar.add_field(name='**To Next Zombie Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req), inline=False)
 
 	await ctx.send(embed=embedVar)
 
@@ -244,10 +244,10 @@ async def sslayer(ctx, username=''):
 
 	embedVar = discord.Embed(title='Spider Slayer Details', description='', color=0x00ff00)
 
-	embedVar.add_field(name='**Tier Kills: **', value='T1 Kills: %d\n T2 Kills: %d\n T3 Kills: %d\n T4 Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
-	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %d\n Current Level: %d\n Percentage to Next Level: %s' % (current_exp, current_level, percentage_completion), inline=True)
+	embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
 	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
-	embedVar.add_field(name='**To Next Spider Slayer Level: **', value='Exp Required: %d\n T4s Required: %d\n Money Required: %s\n' % (req_exp, t4r, money_req))
+	embedVar.add_field(name='**To Next Spider Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req), inline=False)
 
 	await ctx.send(embed=embedVar)
 
@@ -288,10 +288,10 @@ async def wslayer(ctx, username=''):
 
 	embedVar = discord.Embed(title='Wolf Slayer Details', description='', color=0x00ff00)
 
-	embedVar.add_field(name='**Tier Kills: **', value='T1 Kills: %d\n T2 Kills: %d\n T3 Kills: %d\n T4 Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
-	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %d\n Current Level: %d\n Percentage to Next Level: %s' % (current_exp, current_level, percentage_completion), inline=True)
+	embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
 	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
-	embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %d\n T4s Required: %d\n Money Required: %s\n' % (req_exp, t4r, money_req))
+	embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req), inline=False)
 
 	await ctx.send(embed=embedVar)
 
@@ -315,9 +315,9 @@ async def bank(ctx, username=''):
 
 	bank_balance, purse_balance = sbstalk.getBankBalance(mcuuid)
 
-	embedVar = discord.Embed(title='Bank Details', description='', color=0xffffff)
-	embedVar.add_field(name='Bank Balance: ', value='$%d' % (bank_balance), inline=True)
-	embedVar.add_field(name='Purse Balance: ', value='$%d' % (purse_balance), inline=True)
+	embedVar = discord.Embed(title='Bank Details', description='', color=0x00ff00)
+	embedVar.add_field(name='Bank Balance: ', value='$%s' % ("{:,}".format(bank_balance)), inline=True)
+	embedVar.add_field(name='Purse Balance: ', value='$%s' % ("{:,}".format(purse_balance)), inline=True)
 
 	await ctx.send(embed=embedVar)
 
