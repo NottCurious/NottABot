@@ -124,14 +124,70 @@ def getAuctionData(uuid):
 	gold_earnt_auctions = int(stats['auctions_gold_earned']) + 1
 	completed_auctions = stats['auctions_completed']
 
+# def findSlayerCost(a, b, c, d):
+# 	return a*100 + b*1000 + c*10000 + d*50000
+
+# def findSlayerLevel(exp):
+# 	if exp > 1000000:
+# 		return 9
+# 	elif exp > 400000:
+# 		return 8
+# 	elif exp > 100000:
+# 		return 7
+# 	elif exp > 20000:
+# 		return 6
+# 	elif exp > 5000:
+# 		return 5
+# 	elif exp > 1000:
+# 		return 4
+# 	elif exp > 200:
+# 		return 3
+# 	elif exp > 15:
+# 		return 2
+# 	elif exp > 5:
+# 		return 1
+# 	else:
+# 		return 0
+
+# def findCostToNextLevel(exp):
+# 	clevel = findSlayerLevel(exp)
+
+# 	levelreq = [0, 5, 15, 200, 1000, 5000, 20000, 100000, 400000, 1000000]
+
+# 	req_exp = levelreq[clevel] - exp
+
+# 	t4r = req_exp / 500
+# 	t3r = req_exp / 100
+# 	t2r = req_exp / 10
+# 	t1r = req_exp / 1
+
 # def getZombieSlayerData(uuid):
+# 	profile_name, profile_id = getLatestProfile(uuid)
+# 	full_data = get('https://api.hypixel.net/skyblock/profile?key=%s&profile=%s' % (api_key, profile_id))
+# 	zombie_data = full_data['profile']['members'][uuid]['slayer_bosses']['zombie']
+
+# 	t1_kills = zombie_data['boss_kills_tier_0']
+# 	t2_kills = zombie_data['boss_kills_tier_1']
+# 	t3_kills = zombie_data['boss_kills_tier_2']
+# 	t4_kills = zombie_data['boss_kills_tier_3']
+# 	print('sbstalk - getZombieSlayerData: No of Kills Found')
+
+# 	exp = zombie_data['xp']
+# 	print('sbstalk - getZombieSlayerData: Exp Found')
+
+# 	level = findSlayerLevel(exp)
+
+# 	print('sbstalk - getZombieSlayerData: Level Found')
+# 	cost = findCost(t1_kills, t2_kills, t3_kills, t4_kills)
+
+# 	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, cost, levelcompletion, costtonextlevel]
+
+
 # def getSpiderSlayerData(uuid):
 # def getWolfSlayerData(uuid):
 # def getTotalSlayerData(uuid):
 
 # def getDungeonData(uuid):
-
-# def getCollectionData(uuid):
 
 # def getSBdata(uuid):
 # 	highest_crit_damage = stats['highest_critical_damage']
@@ -146,3 +202,4 @@ def getAuctionData(uuid):
 # print(len(exptoup))
 # print(getSkills(getUUID('NottCurious')))
 # print(getSBdata(getUUID('NottCurious')))
+print(getZombieSlayerData(getUUID('NottCurious')))
