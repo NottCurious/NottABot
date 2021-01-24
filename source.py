@@ -9,6 +9,9 @@ import return_wood_prices
 import hypixel_stalking
 import sbstalk
 import numberformat
+import keep_alive
+
+keep_alive.keep_alive()
 
 # Loading Data From .env File
 load_dotenv()
