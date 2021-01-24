@@ -3,6 +3,7 @@ from requests import get
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import numberformat
 
 # Loading Data From .env File
 load_dotenv()
@@ -124,63 +125,120 @@ def getAuctionData(uuid):
 	gold_earnt_auctions = int(stats['auctions_gold_earned']) + 1
 	completed_auctions = stats['auctions_completed']
 
-# def findSlayerCost(a, b, c, d):
-# 	return a*100 + b*1000 + c*10000 + d*50000
+def findSlayerCost(a, b, c, d):
+	return a*100 + b*1000 + c*10000 + d*50000
 
-# def findSlayerLevel(exp):
-# 	if exp > 1000000:
-# 		return 9
-# 	elif exp > 400000:
-# 		return 8
-# 	elif exp > 100000:
-# 		return 7
-# 	elif exp > 20000:
-# 		return 6
-# 	elif exp > 5000:
-# 		return 5
-# 	elif exp > 1000:
-# 		return 4
-# 	elif exp > 200:
-# 		return 3
-# 	elif exp > 15:
-# 		return 2
-# 	elif exp > 5:
-# 		return 1
-# 	else:
-# 		return 0
+def findSlayerLevel(exp):
+	if exp > 1000000:
+		return 9
+	elif exp > 400000:
+		return 8
+	elif exp > 100000:
+		return 7
+	elif exp > 20000:
+		return 6
+	elif exp > 5000:
+		return 5
+	elif exp > 1000:
+		return 4
+	elif exp > 200:
+		return 3
+	elif exp > 15:
+		return 2
+	elif exp > 5:
+		return 1
+	else:
+		return 0
 
-# def findCostToNextLevel(exp):
-# 	clevel = findSlayerLevel(exp)
+def findCostToNextLevel(exp):
+	clevel = findSlayerLevel(exp)
 
-# 	levelreq = [0, 5, 15, 200, 1000, 5000, 20000, 100000, 400000, 1000000]
+	if clevel == 9:
+		return [0, 0, 0]
 
-# 	req_exp = levelreq[clevel] - exp
+	levelreq = [0, 5, 15, 200, 1000, 5000, 20000, 100000, 400000, 1000000]
 
-# 	t4r = req_exp / 500
-# 	t3r = req_exp / 100
-# 	t2r = req_exp / 10
-# 	t1r = req_exp / 1
+	req_exp = levelreq[clevel + 1] - exp
 
-# def getZombieSlayerData(uuid):
-# 	profile_name, profile_id = getLatestProfile(uuid)
-# 	full_data = get('https://api.hypixel.net/skyblock/profile?key=%s&profile=%s' % (api_key, profile_id))
-# 	zombie_data = full_data['profile']['members'][uuid]['slayer_bosses']['zombie']
+	t4r = req_exp / 500
 
-# 	t1_kills = zombie_data['boss_kills_tier_0']
-# 	t2_kills = zombie_data['boss_kills_tier_1']
-# 	t3_kills = zombie_data['boss_kills_tier_2']
-# 	t4_kills = zombie_data['boss_kills_tier_3']
-# 	print('sbstalk - getZombieSlayerData: No of Kills Found')
+	return [t4r, req_exp, t4r*50000]
 
-# 	exp = zombie_data['xp']
-# 	print('sbstalk - getZombieSlayerData: Exp Found')
+def getZombieSlayerData(uuid):
+	profile_name, profile_id = getLatestProfile(uuid)
+	full_data = get('https://api.hypixel.net/skyblock/profile?key=%s&profile=%s' % (api_key, profile_id)).json()
+	zombie_data = full_data['profile']['members'][uuid]['slayer_bosses']['zombie']
 
-# 	level = findSlayerLevel(exp)
+	t1_kills = zombie_data['boss_kills_tier_0']
+	t2_kills = zombie_data['boss_kills_tier_1']
+	t3_kills = zombie_data['boss_kills_tier_2']
+	t4_kills = zombie_data['boss_kills_tier_3']
+	print('sbstalk - getZombieSlayerData: No of Kills Found')
 
-# 	print('sbstalk - getZombieSlayerData: Level Found')
-# 	cost = findCost(t1_kills, t2_kills, t3_kills, t4_kills)
+	exp = zombie_data['xp']
+	print('sbstalk - getZombieSlayerData: Exp Found')
 
-# 	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, cost, levelcompletion, costtonextlevel]
+	level = findSlayerLevel(exp)
+
+	print('sbstalk - getZombieSlayerData: Level Found')
+	moneyspent = findSlayerCost(t1_kills, t2_kills, t3_kills, t4_kills)
+
+	t4r, req_exp, money_req = findCostToNextLevel(exp)
+	
+	levelcompletion = exp * 100 / (req_exp + exp)
+
+	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.human_format(moneyspent), levelcompletion, t4r, req_exp, numberformat.human_format(money_req)]
+
+def getSpiderSlayerData(uuid):
+	profile_name, profile_id = getLatestProfile(uuid)
+	full_data = get('https://api.hypixel.net/skyblock/profile?key=%s&profile=%s' % (api_key, profile_id)).json()
+	zombie_data = full_data['profile']['members'][uuid]['slayer_bosses']['spider']
+
+	t1_kills = zombie_data['boss_kills_tier_0']
+	t2_kills = zombie_data['boss_kills_tier_1']
+	t3_kills = zombie_data['boss_kills_tier_2']
+	t4_kills = zombie_data['boss_kills_tier_3']
+	print('sbstalk - getSpiderSlayerData: No of Kills Found')
+
+	exp = zombie_data['xp']
+	print('sbstalk - getSpiderSlayerData: Exp Found')
+
+	level = findSlayerLevel(exp)
+
+	print('sbstalk - getSpiderSlayerData: Level Found')
+	moneyspent = findSlayerCost(t1_kills, t2_kills, t3_kills, t4_kills)
+
+	t4r, req_exp, money_req = findCostToNextLevel(exp)
+	
+	levelcompletion = exp * 100 / (req_exp + exp)
+
+	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.human_format(moneyspent), levelcompletion, t4r, req_exp, numberformat.human_format(money_req)]
+
+def getWolfSlayerData(uuid):
+	profile_name, profile_id = getLatestProfile(uuid)
+	full_data = get('https://api.hypixel.net/skyblock/profile?key=%s&profile=%s' % (api_key, profile_id)).json()
+	zombie_data = full_data['profile']['members'][uuid]['slayer_bosses']['wolf']
+
+	t1_kills = zombie_data['boss_kills_tier_0']
+	t2_kills = zombie_data['boss_kills_tier_1']
+	t3_kills = zombie_data['boss_kills_tier_2']
+	t4_kills = zombie_data['boss_kills_tier_3']
+	print('sbstalk - getWolfSlayerData: No of Kills Found')
+
+	exp = zombie_data['xp']
+	print('sbstalk - getWolfSlayerData: Exp Found')
+
+	level = findSlayerLevel(exp)
+
+	print('sbstalk - getWolfSlayerData: Level Found')
+	moneyspent = findSlayerCost(t1_kills, t2_kills, t3_kills, t4_kills)
+
+	t4r, req_exp, money_req = findCostToNextLevel(exp)
+	
+	levelcompletion = exp * 100 / (req_exp + exp)
+
+	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.human_format(moneyspent), levelcompletion, t4r, req_exp, numberformat.human_format(money_req)]
+
 
 
 # def getSpiderSlayerData(uuid):

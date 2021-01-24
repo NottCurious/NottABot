@@ -33,20 +33,32 @@ async def on_guild_join(ctx):
 
 @client.command()
 async def helpme(ctx):
-	if ctx.author == 'LokiLok#6861':
-		await ctx.send('Ofcourse Master Loki')
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+	if str(ctx.message.author) == 'NottCurious#4351':
+		await ctx.send('Yes m\'lord Curious')
+
+	if str(ctx.message.author) == 'RegrettingLifeChoices#4684':
+		await ctx.send('#GoombaLivesMatter')
 
 	print('Help Command Used')
 	embedVar = discord.Embed(title='Temporary Help Page', description='', color=0x00ff00)
 	embedVar.add_field(name='=wood', value='Displays Current Enchanted Wood Prices to Help You Choose Which To Farm!', inline=False)
-	embedVar.add_field(name='=hystalk \{username\}', value='Displays Simple Information About a Player')
-	embedVar.add_field(name='=skillstalk \{username\}', value='Displays Current Skill Level of a Player')
+	embedVar.add_field(name='=hystalk \{username\}', value='Displays Simple Information About a Player', inline=False)
+	embedVar.add_field(name='=skills \{username\}', value='Displays Current Skill Level of a Player', inline=False)
+	embedVar.add_field(name='=zslayer \{username\}', value='Displays Zombie Slayer Details', inline=True)
+	embedVar.add_field(name='=sslayer \{username\}', value='Displays Spider Slayer Details', inline=True)
+	embedVar.add_field(name='=wslayer \{username\}', value='Displays Wolf Slayer Details', inline=True)
 
 	await ctx.send(embed=embedVar)
 	# Wood, hystalk, skillstalk, dungeonstalk, alchemy level, 
 
 @client.command()
 async def wood(ctx):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
 	print("%s requests Wood Prices" % (ctx.author))
 	prices = []
 	prices = return_wood_prices.get_wood_prices()
@@ -74,6 +86,10 @@ async def wood(ctx):
 
 @client.command()
 async def hystalk(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+
 	if username == '':
 		await ctx.send('Enter a Username and Try Again')
 		return
@@ -107,7 +123,11 @@ async def hystalk(ctx, username=''):
 	await ctx.send(embed=embedVar)
 
 @client.command()
-async def skillstalk(ctx, username=''):
+async def skills(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+
 	if username == '':
 		print('Exiting Function, Invalid Username')
 		await ctx.send('Enter a Username and Try Again...')
@@ -138,6 +158,140 @@ async def skillstalk(ctx, username=''):
 	await ctx.send(embed=embedVar)
 	print('Embed Sent')
 	print('\n')
+
+@client.command()
+async def zslayer(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = sbstalk.getUUID(username)
+
+	if mcuuid == 'no':
+		print('Exiting Function, Player Doesn\'t Exist')
+		await ctx.send('Enter a Valid Username and Try Again...')
+		return
+
+	details = sbstalk.getZombieSlayerData(mcuuid)
+
+	t1k = details[0]
+	t2k = details[1]
+	t3k = details[2]
+	t4k = details[3]
+
+	current_exp = details[4]
+	current_level = details[5]
+
+	money_spent = details[6]
+	percentage_completion = str(details[7]) + f'%'
+
+	t4r = details[8]
+	req_exp = details[9]
+	money_req = details[10]
+
+	embedVar = discord.Embed(title='Zombie Slayer Details', description='', color=0x00ff00)
+
+	embedVar.add_field(name='**Tier Kills: **', value='T1 Kills: %d\n T2 Kills: %d\n T3 Kills: %d\n T4 Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %d\n Current Level: %d\n Percentage to Next Level: %s' % (current_exp, current_level, percentage_completion), inline=True)
+	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
+	embedVar.add_field(name='**To Next Zombie Slayer Level: **', value='Exp Required: %d\n T4s Required: %d\n Money Required: %s\n' % (req_exp, t4r, money_req))
+
+	await ctx.send(embed=embedVar)
+
+@client.command()
+async def sslayer(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = sbstalk.getUUID(username)
+
+	if mcuuid == 'no':
+		print('Exiting Function, Player Doesn\'t Exist')
+		await ctx.send('Enter a Valid Username and Try Again...')
+		return
+
+	details = sbstalk.getSpiderSlayerData(mcuuid)
+
+	t1k = details[0]
+	t2k = details[1]
+	t3k = details[2]
+	t4k = details[3]
+
+	current_exp = details[4]
+	current_level = details[5]
+
+	money_spent = details[6]
+	percentage_completion = str(details[7]) + f'%'
+
+	t4r = details[8]
+	req_exp = details[9]
+	money_req = details[10]
+
+	embedVar = discord.Embed(title='Spider Slayer Details', description='', color=0x00ff00)
+
+	embedVar.add_field(name='**Tier Kills: **', value='T1 Kills: %d\n T2 Kills: %d\n T3 Kills: %d\n T4 Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %d\n Current Level: %d\n Percentage to Next Level: %s' % (current_exp, current_level, percentage_completion), inline=True)
+	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
+	embedVar.add_field(name='**To Next Spider Slayer Level: **', value='Exp Required: %d\n T4s Required: %d\n Money Required: %s\n' % (req_exp, t4r, money_req))
+
+	await ctx.send(embed=embedVar)
+
+@client.command()
+async def wslayer(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = sbstalk.getUUID(username)
+
+	if mcuuid == 'no':
+		print('Exiting Function, Player Doesn\'t Exist')
+		await ctx.send('Enter a Valid Username and Try Again...')
+		return
+
+	details = sbstalk.getWolfSlayerData(mcuuid)
+
+	t1k = details[0]
+	t2k = details[1]
+	t3k = details[2]
+	t4k = details[3]
+
+	current_exp = details[4]
+	current_level = details[5]
+
+	money_spent = details[6]
+	percentage_completion = str(details[7]) + f'%'
+
+	t4r = details[8]
+	req_exp = details[9]
+	money_req = details[10]
+
+	embedVar = discord.Embed(title='Wolf Slayer Details', description='', color=0x00ff00)
+
+	embedVar.add_field(name='**Tier Kills: **', value='T1 Kills: %d\n T2 Kills: %d\n T3 Kills: %d\n T4 Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %d\n Current Level: %d\n Percentage to Next Level: %s' % (current_exp, current_level, percentage_completion), inline=True)
+	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
+	embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %d\n T4s Required: %d\n Money Required: %s\n' % (req_exp, t4r, money_req))
+
+	await ctx.send(embed=embedVar)
+
+
 
 # Execute Commands
 client.run(BOTTOKEN)
