@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import return_wood_prices
 import hypixel_stalking
 import sbstalk
+import numberformat
 
 # Loading Data From .env File
 load_dotenv()
@@ -89,40 +90,28 @@ async def hystalk(ctx, username=''):
 	await ctx.send(embed=embedVar)
 
 @client.command()
-async def skillstalk(ctx, username=''):	
+async def skillstalk(ctx, username=''):
 	if username == '':
-		await ctx.send('Enter a Username and Try Again')
+		await ctx.send('Enter a Username and Try Again...')
 		return
 
-	# await ctx.send('Stalking Player.')
+	mcuuid = sbstalk.getUUID(username)
 
-	print('%s asks to stalk skills of %s' % (ctx.author, username))
-	# details = hypixel_stalking.stalkPerson(username)
-
-	uuid = sbstalk.getUUID(username)
-
-	if uuid == 'no':
-		await ctx.send('Player Doesn\'t Exist')
+	if mcuuid == 'no':
+		await ctx.send('Enter a Valid Username and Try Again...')
 		return
 
-	skills = sbstalk.getSkills(uuid)
+	names = ['**Combat**', '**Foraging**', '**Farming**', '**Enchanting**', '**Alchemy**', '**Mining**', '**Fishing**']
+	levels, expremaining, exptoup = sbstalk.getSkills(mcuuid)
 
-	combat = skills[0]
-	foraging = skills[1]
-	farming = skills[2]
-	enchanting = skills[3]
-	alchemy = skills[4]
-	mining = skills[5]
-	fishing = skills[6]
+	skill_avg = sbstalk.findSkillAverage(mcuuid)
 
-	embedVar = discord.Embed(title='Skills of %s' % (username), description='', color=0x00ff00)
-	embedVar.add_field(name='Combat', value=combat, inline=False)
-	embedVar.add_field(name='Foraging', value=foraging, inline=False)
-	embedVar.add_field(name='Farming', value=farming, inline=False)
-	embedVar.add_field(name='Enchanting', value=enchanting, inline=False)
-	embedVar.add_field(name='Alchemy', value=alchemy, inline=False)
-	embedVar.add_field(name='Mining', value=mining, inline=False)
-	embedVar.add_field(name='Fishing', value=fishing, inline=False)
+	embedVar = discord.Embed(title='Skill Details', description='', color=0x00ff00) # Make this Look Better In the Future
+	embedVar.add_field(name='**Skill Average**', value=skill_avg, inline=False)	
+
+
+	for i in range(len(levels)):
+		embedVar.add_field(name=names[i], value='Level: %d \n Progress Percent: %d' % (levels[i], round(expremaining[i]*100/exptoup[i], 2)) + f'%' + '\n %s / %s' % (numberformat.human_format(expremaining[i]), numberformat.human_format(exptoup[i])), inline=True)
 
 	await ctx.send(embed=embedVar)
 
