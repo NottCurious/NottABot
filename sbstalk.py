@@ -202,4 +202,4 @@ def getAuctionData(uuid):
 # print(len(exptoup))
 # print(getSkills(getUUID('NottCurious')))
 # print(getSBdata(getUUID('NottCurious')))
-print(getZombieSlayerData(getUUID('NottCurious')))
+# print(getZombieSlayerData(getUUID('NottCurious')))
