@@ -32,17 +32,17 @@ async def on_guild_join(ctx):
 	await ctx.send('o/ I\'m Currently Developed and Maintained By NottCurious#4351')
 
 @client.command()
-async def help(ctx):
+async def helpme(ctx):
 	if ctx.author == 'LokiLok#6861':
-		ctx.send('Ofcourse Master Loki')
+		await ctx.send('Ofcourse Master Loki')
 
 	print('Help Command Used')
 	embedVar = discord.Embed(title='Temporary Help Page', description='', color=0x00ff00)
-	embedVar.add_field(name=f'=wood', value='Displays Current Enchanted Wood Prices to Help You Choose Which To Farm!', inline=False)
-	embedVar.add_field(name=f'=hystalk {username}', value='Displays Simple Information About a Player')
-	embedVar.add_field(name=f'=skillstalk {username}', value='Displays Current Skill Level of a Player')
+	embedVar.add_field(name='=wood', value='Displays Current Enchanted Wood Prices to Help You Choose Which To Farm!', inline=False)
+	embedVar.add_field(name='=hystalk \{username\}', value='Displays Simple Information About a Player')
+	embedVar.add_field(name='=skillstalk \{username\}', value='Displays Current Skill Level of a Player')
 
-	ctx.send(embed=embedVar)
+	await ctx.send(embed=embedVar)
 	# Wood, hystalk, skillstalk, dungeonstalk, alchemy level, 
 
 @client.command()
