@@ -1,10 +1,11 @@
 # Importing Libraries
 import discord
-import requests
 import os
 from discord.ext import commands
 from pathlib import Path
 from dotenv import load_dotenv
+
+# Files
 import return_wood_prices
 import hypixel_stalking
 import sbstalk
@@ -25,9 +26,9 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-    await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.1, do =helpme for the new commands')
-    await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.1, do =helpme for the new commands')
-    # await channel.send('Bot has Been Updated to v1.1, do =helpme for the new commands')
+    await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.1.1, do =helpme for the new commands')
+    await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.1.1, do =helpme for the new commands')
+
     print('Logged in as {0.user}'.format(client))
 
 @client.event
@@ -53,7 +54,7 @@ async def helpme(ctx):
 	embedVar.add_field(name='=zslayer \{username\}', value='Displays Zombie Slayer Details', inline=True)
 	embedVar.add_field(name='=sslayer \{username\}', value='Displays Spider Slayer Details', inline=True)
 	embedVar.add_field(name='=wslayer \{username\}', value='Displays Wolf Slayer Details', inline=True)
-
+	embedVar.add_field(name='=bank \{username\}', value='Displays Current Bank and Purse Balance', inline=False)
 	await ctx.send(embed=embedVar)
 	# Wood, hystalk, skillstalk, dungeonstalk, alchemy level, 
 
@@ -294,7 +295,31 @@ async def wslayer(ctx, username=''):
 
 	await ctx.send(embed=embedVar)
 
+@client.command()
+async def bank(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
 
+
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = sbstalk.getUUID(username)
+
+	if mcuuid == 'no':
+		print('Exiting Function, Player Doesn\'t Exist')
+		await ctx.send('Enter a Valid Username and Try Again...')
+		return
+
+	bank_balance, purse_balance = sbstalk.getBankBalance(mcuuid)
+
+	embedVar = discord.Embed(title='Bank Details', description='', color=0xffffff)
+	embedVar.add_field(name='Bank Balance: ', value='$%d' % (bank_balance), inline=True)
+	embedVar.add_field(name='Purse Balance: ', value='$%d' % (purse_balance), inline=True)
+
+	await ctx.send(embed=embedVar)
 
 # Execute Commands
 client.run(BOTTOKEN)
