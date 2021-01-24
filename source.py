@@ -26,12 +26,10 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-	c = [791559545519734795, 784965489687658530]
+	c = [802841895536951306, 784965489687658530]
 
 	for i in c:
 		await client.get_channel(i).send('Bot has Been Updated to v1.1.2 (bugfixes)')
-    # await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.1.2 (bugfixes)')
-    # await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.1.2 (bugfixes)')
 
     print('Logged in as {0.user}'.format(client))
 
