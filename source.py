@@ -26,8 +26,8 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-    await client.get_channel(802841895536951306).send('Bot has Been Updated to v1.1.3 (easter eggs)')
-    await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.1.3 (easter eggs)')
+    # await client.get_channel(802841895536951306).send('Bot has Been Updated to v1.1.4 (easter eggs)')
+    # await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.1.4 (easter eggs)')
 
     print('Logged in as {0.user}'.format(client))
 
@@ -321,5 +321,26 @@ async def bank(ctx, username=''):
 
 	await ctx.send(embed=embedVar)
 
+<<<<<<< HEAD
+=======
+@client.command()
+async def loki(ctx):
+	if str(ctx.author) != 'LokiLok#6861':
+		return
+
+	await ctx.send('Loki, I You Best of Luck in Whatever Endeavour You May Chance Upon, You Can Do It!!!!')
+
+@client.command()
+async def nott(ctx):
+	if str(ctx.author) != 'NottCurious#4351':
+		return
+
+	await ctx.send('My Lord and Creator Curious, Your Wish Is My Command As I am Your Loyal Servant')
+
+@client.command()
+async def expired(ctx):
+	await ctx.send('That Disgraced Goomba Hater Should Not Be Allowed to Make More Statements that can Ruin the Lives of Many!!!!!! #GOOMBALIVESMATTER')
+
+>>>>>>> c8a7a2255845e08cdb8503d6f925b1b60c4a1209
 # Execute Commands
 client.run(BOTTOKEN)
