@@ -26,11 +26,11 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-	await client.get_channel(791559545519734795).send(f'Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
-    await client.get_channel(802841895536951306).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
-    await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
+  await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
+  await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
+  await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
 
-    print('Logged in as {0.user}'.format(client))
+  print('Logged in as {0.user}'.format(client))
 
 @client.event
 async def on_guild_join(ctx):
