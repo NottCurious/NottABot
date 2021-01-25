@@ -187,7 +187,7 @@ def getZombieSlayerData(uuid):
 	
 	levelcompletion = exp * 100 / (req_exp + exp)
 
-	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.human_format(moneyspent), levelcompletion, t4r, req_exp, numberformat.human_format(money_req)]
+	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.comma(moneyspent), levelcompletion, t4r, req_exp, numberformat.comma(money_req)]
 
 def getSpiderSlayerData(uuid):
 	profile_name, profile_id = getLatestProfile(uuid)
@@ -212,7 +212,7 @@ def getSpiderSlayerData(uuid):
 	
 	levelcompletion = exp * 100 / (req_exp + exp)
 
-	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.human_format(moneyspent), levelcompletion, t4r, req_exp, numberformat.human_format(money_req)]
+	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.comma(moneyspent), levelcompletion, t4r, req_exp, numberformat.comma(money_req)]
 
 def getWolfSlayerData(uuid):
 	profile_name, profile_id = getLatestProfile(uuid)
@@ -237,7 +237,7 @@ def getWolfSlayerData(uuid):
 	
 	levelcompletion = exp * 100 / (req_exp + exp)
 
-	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.human_format(moneyspent), levelcompletion, t4r, req_exp, numberformat.human_format(money_req)]
+	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.comma(moneyspent), levelcompletion, t4r, req_exp, numberformat.comma(money_req)]
 
 def getExpToUp(level):
 	if level == 0:

@@ -10,9 +10,9 @@ import return_wood_prices
 import hypixel_stalking
 import sbstalk
 import numberformat
-import keep_alive
+# import keep_alive
 
-keep_alive.keep_alive()
+# keep_alive.keep_alive()
 
 # Loading Data From .env File
 load_dotenv()
@@ -26,8 +26,9 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-    # await client.get_channel(802841895536951306).send('Bot has Been Updated to v1.1.4 (easter eggs)')
-    # await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.1.4 (easter eggs)')
+	await client.get_channel(791559545519734795).send(f'Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
+    await client.get_channel(802841895536951306).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
+    await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
 
     print('Logged in as {0.user}'.format(client))
 
@@ -51,9 +52,9 @@ async def helpme(ctx):
 	embedVar.add_field(name='=wood', value='Displays Current Enchanted Wood Prices to Help You Choose Which To Farm!', inline=False)
 	embedVar.add_field(name='=hystalk \{username\}', value='Displays Simple Information About a Player', inline=False)
 	embedVar.add_field(name='=skills \{username\}', value='Displays Current Skill Level of a Player', inline=False)
-	embedVar.add_field(name='=zslayer \{username\}', value='Displays Zombie Slayer Details', inline=True)
-	embedVar.add_field(name='=sslayer \{username\}', value='Displays Spider Slayer Details', inline=True)
-	embedVar.add_field(name='=wslayer \{username\}', value='Displays Wolf Slayer Details', inline=True)
+	embedVar.add_field(name='=revenant \{username\}', value='Displays Zombie Slayer Details', inline=True)
+	embedVar.add_field(name='=tarantula \{username\}', value='Displays Spider Slayer Details', inline=True)
+	embedVar.add_field(name='=sven \{username\}', value='Displays Wolf Slayer Details', inline=True)
 	embedVar.add_field(name='=bank \{username\}', value='Displays Current Bank and Purse Balance', inline=False)
 	await ctx.send(embed=embedVar)
 	# Wood, hystalk, skillstalk, dungeonstalk, alchemy level, 
@@ -164,7 +165,7 @@ async def skills(ctx, username=''):
 	print('\n')
 
 @client.command()
-async def zslayer(ctx, username=''):
+async def revenant(ctx, username=''):
 	if str(ctx.message.author) == 'LokiLok#6861':
 		await ctx.send('Please Wait While I Search Master Loki')
 
@@ -198,17 +199,19 @@ async def zslayer(ctx, username=''):
 	req_exp = details[9]
 	money_req = details[10]
 
-	embedVar = discord.Embed(title='Zombie Slayer Details', description='', color=0x00ff00)
+	exptoup = sbstalk.getExpToUp(current_level)
 
-	embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
-	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
-	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
-	embedVar.add_field(name='**To Next Zombie Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req), inline=False)
+	embedVar = discord.Embed(title='Revenant Slayer Details', description='', color=0x00ff00)
 
+	# embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	# embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
+	# embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
+	# embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req))
+	embedVar.add_field(name='**Revenant Slayer**', value='```ini\n[ == Level %s == ]\n%s / %s\nCompleted Percentage: %s\n\n[ Tier Kills ]\nTier I    : %s\nTier II   : %s\nTier III  : %s\nTier IV   : %s\n\nTotal Money Spent : %s\n\n[ Next Tier ]\nTier IVs Required : %s\nMoney Required : %s\n```' % (str(numberformat.comma(current_level)), str(numberformat.comma(current_exp)), str(numberformat.comma(exptoup)), str(percentage_completion), str(t1k), str(t2k), str(t3k), str(t4k), str(money_spent), str(t4r), str(money_req)), inline=True)
 	await ctx.send(embed=embedVar)
 
 @client.command()
-async def sslayer(ctx, username=''):
+async def tarantula(ctx, username=''):
 	if str(ctx.message.author) == 'LokiLok#6861':
 		await ctx.send('Please Wait While I Search Master Loki')
 
@@ -242,17 +245,20 @@ async def sslayer(ctx, username=''):
 	req_exp = details[9]
 	money_req = details[10]
 
-	embedVar = discord.Embed(title='Spider Slayer Details', description='', color=0x00ff00)
+	exptoup = sbstalk.getExpToUp(current_level)
 
-	embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
-	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
-	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
-	embedVar.add_field(name='**To Next Spider Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req), inline=False)
+	embedVar = discord.Embed(title='Tarantula Slayer Details', description='', color=0x00ff00)
 
+	# embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	# embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
+	# embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
+	# embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req))
+	embedVar.add_field(name='**Tarantula Slayer**', value='```ini\n[ == Level %s == ]\n%s / %s\nCompleted Percentage: %s\n\n[ Tier Kills ]\nTier I    : %s\nTier II   : %s\nTier III  : %s\nTier IV   : %s\n\nTotal Money Spent : %s\n\n[ Next Tier ]\nTier IVs Required : %s\nMoney Required : %s\n```' % (str(numberformat.comma(current_level)), str(numberformat.comma(current_exp)), str(numberformat.comma(exptoup)), str(percentage_completion), str(t1k), str(t2k), str(t3k), str(t4k), str(money_spent), str(t4r), str(money_req)), inline=True)
 	await ctx.send(embed=embedVar)
 
+
 @client.command()
-async def wslayer(ctx, username=''):
+async def sven(ctx, username=''):
 	if str(ctx.message.author) == 'LokiLok#6861':
 		await ctx.send('Please Wait While I Search Master Loki')
 
@@ -286,14 +292,17 @@ async def wslayer(ctx, username=''):
 	req_exp = details[9]
 	money_req = details[10]
 
-	embedVar = discord.Embed(title='Wolf Slayer Details', description='', color=0x00ff00)
+	exptoup = sbstalk.getExpToUp(current_level)
 
-	embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
-	embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
-	embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
-	embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req), inline=False)
+	embedVar = discord.Embed(title='Sven Slayer Details', description='', color=0x00ff00)
 
+	# embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
+	# embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
+	# embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
+	# embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req))
+	embedVar.add_field(name='**Sven Slayer**', value='```ini\n[ == Level %s == ]\n%s / %s\nCompleted Percentage: %s\n\n[ Tier Kills ]\nTier I    : %s\nTier II   : %s\nTier III  : %s\nTier IV   : %s\n\nTotal Money Spent : %s\n\n[ Next Tier ]\nTier IVs Required : %s\nMoney Required : %s\n```' % (str(numberformat.comma(current_level)), str(numberformat.comma(current_exp)), str(numberformat.comma(exptoup)), str(percentage_completion), str(t1k), str(t2k), str(t3k), str(t4k), str(money_spent), str(t4r), str(money_req)), inline=True)
 	await ctx.send(embed=embedVar)
+
 
 @client.command()
 async def bank(ctx, username=''):
@@ -321,26 +330,5 @@ async def bank(ctx, username=''):
 
 	await ctx.send(embed=embedVar)
 
-<<<<<<< HEAD
-=======
-@client.command()
-async def loki(ctx):
-	if str(ctx.author) != 'LokiLok#6861':
-		return
-
-	await ctx.send('Loki, I You Best of Luck in Whatever Endeavour You May Chance Upon, You Can Do It!!!!')
-
-@client.command()
-async def nott(ctx):
-	if str(ctx.author) != 'NottCurious#4351':
-		return
-
-	await ctx.send('My Lord and Creator Curious, Your Wish Is My Command As I am Your Loyal Servant')
-
-@client.command()
-async def expired(ctx):
-	await ctx.send('That Disgraced Goomba Hater Should Not Be Allowed to Make More Statements that can Ruin the Lives of Many!!!!!! #GOOMBALIVESMATTER')
-
->>>>>>> c8a7a2255845e08cdb8503d6f925b1b60c4a1209
 # Execute Commands
 client.run(BOTTOKEN)
