@@ -25,12 +25,22 @@ def getUUID(username):
 	except:
 		return 'no'
 
-def getProfiles(uuid):
+def getProfileCuteNames(uuid):
 	profs = []
 	playerdata = get('https://api.hypixel.net/player?key=%s&uuid=%s' % (api_key, uuid)).json()
 	print('sbstalk - getProfiles: API Receieved')
 	for i in playerdata['player']['stats']['SkyBlock']['profiles']:
 		profs.append(i)
+
+	print('sbstalk - getProfiles: Returning Profiles')
+	return profs	
+
+def getProfiles(uuid):
+	profs = []
+	playerdata = get('https://api.hypixel.net/player?key=%s&uuid=%s' % (api_key, uuid)).json()
+	print('sbstalk - getProfiles: API Receieved')
+	for i in playerdata['player']['stats']['SkyBlock']['profiles']:
+		profs.append(playerdata['player']['stats']['SkyBlock']['profiles'][i]['cute_name'])
 
 	print('sbstalk - getProfiles: Returning Profiles')
 	return profs
@@ -60,8 +70,11 @@ def getBankBalance(uuid):
 
 	print('sbstalk - getBankBalance: Received SBData')
 
-	bank_money = sbdata['profile']['banking']['balance']
-	purse = sbdata['profile']['members'][uuid]['coin_purse']
+	try:
+		bank_money = sbdata['profile']['banking']['balance']
+		purse = sbdata['profile']['members'][uuid]['coin_purse']
+	except:
+		return 'no', 'no'
 
 	print('sbstalk - getBankBalance: Returning Data')
 	return round(bank_money, 2), round(purse, 2)
@@ -260,3 +273,6 @@ def getExpToUp(level):
 		return 1000000
 	else:
 		return 1
+
+# print(getProfiles(getUUID('NottCuriouS')))
+print(getBankBalance(getUUID('Duokatarina')))

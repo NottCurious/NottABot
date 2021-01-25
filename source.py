@@ -26,11 +26,17 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-  # await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.3 (Added Combined Slayer Command, Check helpme for more details)')
-  # await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.3 (Added Combined Slayer Command, Check helpme for more details)')
-  # await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.3 (Added Combined Slayer Command, Check helpme for more details)')
 
-  print('Logged in as {0.user}'.format(client))
+	# Loki Server - General Chat
+  	# await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.3 (Added Combined Slayer Command, Check helpme for more details)')
+  	
+  	# Private Server
+  	await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.3.1 (Added an Error Message for People Whose Bank APIs are Disabled)')
+  	
+  	# Loki Server - Bot Chat
+  	await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.3.1 (Added an Error Message for People Whose Bank APIs are Disabled)')
+
+  	print('Logged in as {0.user}'.format(client))
 
 @client.event
 async def on_guild_join(ctx):
@@ -395,9 +401,35 @@ async def bank(ctx, username=''):
 
 	bank_balance, purse_balance = sbstalk.getBankBalance(mcuuid)
 
+	if bank_balance == 'no':
+		await ctx.send('Bank API is Switched Off for this Player')
+		return
+
 	embedVar = discord.Embed(title='Bank Details', description='', color=0x00ff00)
 	embedVar.add_field(name='Bank Balance: ', value='$%s' % ("{:,}".format(bank_balance)), inline=True)
 	embedVar.add_field(name='Purse Balance: ', value='$%s' % ("{:,}".format(purse_balance)), inline=True)
+
+	await ctx.send(embed=embedVar)
+
+@client.command()
+async def profiles(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = sbstalk.getUUID(username)
+
+	profs = sbstalk.getProfileCuteNames(mcuuid)
+
+	embedVar = discord.Embed(title='Profiles', description='', color=0x00ff00)
+
+	for i in range(len(profs)):
+		embedVar.add_field('Profile %d' % (i + 1), value=profs[i])
 
 	await ctx.send(embed=embedVar)
 
