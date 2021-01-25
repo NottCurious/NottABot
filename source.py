@@ -26,9 +26,9 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-  # await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
-  # await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
-  # await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.2 (remade slayer functions, please check =helpme for new command)')
+  await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.3 (Added Combined Slayer Command, Check helpme for more details)')
+  await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.3 (Added Combined Slayer Command, Check helpme for more details)')
+  await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.3 (Added Combined Slayer Command, Check helpme for more details)')
 
   print('Logged in as {0.user}'.format(client))
 
@@ -55,6 +55,7 @@ async def helpme(ctx):
 	embedVar.add_field(name='=revenant \{username\}', value='Displays Zombie Slayer Details', inline=True)
 	embedVar.add_field(name='=tarantula \{username\}', value='Displays Spider Slayer Details', inline=True)
 	embedVar.add_field(name='=sven \{username\}', value='Displays Wolf Slayer Details', inline=True)
+	embedVar.add_field(name='=slayers \{username\}', value='Displays All Slayer Details of the Given Username', inline=False)
 	embedVar.add_field(name='=bank \{username\}', value='Displays Current Bank and Purse Balance', inline=False)
 	await ctx.send(embed=embedVar)
 	# Wood, hystalk, skillstalk, dungeonstalk, alchemy level, 
@@ -296,13 +297,83 @@ async def sven(ctx, username=''):
 
 	embedVar = discord.Embed(title='Sven Slayer Details', description='', color=0x00ff00)
 
-	# embedVar.add_field(name='**Tier Kills: **', value='Tier I Kills: %d\nTier II Kills: %d\nTier III Kills: %d\nTier IV Kills: %d' % (t1k, t2k, t3k, t4k), inline=False)
-	# embedVar.add_field(name='**Current Exp and Level: **', value='Current Exp: %s\n Current Level: %d\n Percentage to Next Level: %s' % ("{:,}".format(current_exp), current_level, percentage_completion), inline=True)
-	# embedVar.add_field(name='**Money Spent: **', value=money_spent, inline=True)
-	# embedVar.add_field(name='**To Next Wolf Slayer Level: **', value='Exp Required: %s\n T4s Required: %d\n Money Required: %s\n' % ("{:,}".format(req_exp), t4r, money_req))
 	embedVar.add_field(name='**Sven Slayer**', value='```ini\n[ == Level %s == ]\n%s / %s\nCompleted Percentage: %s\n\n[ Tier Kills ]\nTier I    : %s\nTier II   : %s\nTier III  : %s\nTier IV   : %s\n\nTotal Money Spent : %s\n\n[ Next Tier ]\nTier IVs Required : %s\nMoney Required : %s\n```' % (str(numberformat.comma(current_level)), str(numberformat.comma(current_exp)), str(numberformat.comma(exptoup)), str(percentage_completion), str(t1k), str(t2k), str(t3k), str(t4k), str(money_spent), str(t4r), str(money_req)), inline=True)
 	await ctx.send(embed=embedVar)
 
+@client.command()
+async def slayers(ctx, username=''):
+	if str(ctx.message.author) == 'LokiLok#6861':
+		await ctx.send('Please Wait While I Search Master Loki')
+
+
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = sbstalk.getUUID(username)
+
+	if mcuuid == 'no':
+		print('Exiting Function, Player Doesn\'t Exist')
+		await ctx.send('Enter a Valid Username and Try Again...')
+		return
+
+	zdetails = sbstalk.getZombieSlayerData(mcuuid)
+	tdetails = sbstalk.getSpiderSlayerData(mcuuid)
+	wdetails = sbstalk.getWolfSlayerData(mcuuid)
+
+	zt1k = zdetails[0]
+	zt2k = zdetails[1]
+	zt3k = zdetails[2]
+	zt4k = zdetails[3]
+	zcurrent_exp = zdetails[4]
+	zcurrent_level = zdetails[5]
+	zmoney_spent = zdetails[6]
+	zpercentage_completion = str(zdetails[7]) + f'%'
+	zt4r = zdetails[8]
+	zreq_exp = zdetails[9]
+	zmoney_req = zdetails[10]
+
+	tt1k = tdetails[0]
+	tt2k = tdetails[1]
+	tt3k = tdetails[2]
+	tt4k = tdetails[3]
+	tcurrent_exp = tdetails[4]
+	tcurrent_level = tdetails[5]
+	tmoney_spent = tdetails[6]
+	tpercentage_completion = str(tdetails[7]) + f'%'
+	tt4r = tdetails[8]
+	treq_exp = tdetails[9]
+	tmoney_req = tdetails[10]
+
+	wt1k = wdetails[0]
+	wt2k = wdetails[1]
+	wt3k = wdetails[2]
+	wt4k = wdetails[3]
+	wcurrent_exp = wdetails[4]
+	wcurrent_level = wdetails[5]
+	wmoney_spent = wdetails[6]
+	wpercentage_completion = str(wdetails[7]) + f'%'
+	wt4r = wdetails[8]
+	wreq_exp = wdetails[9]
+	wmoney_req = wdetails[10]
+
+	zexptoup = sbstalk.getExpToUp(zcurrent_level)
+	texptoup = sbstalk.getExpToUp(tcurrent_level)
+	wexptoup = sbstalk.getExpToUp(wcurrent_level)
+
+
+	embedVar = discord.Embed(title='Slayer Details', description='', color=0x00ff00)
+
+	embedVar.add_field(name='**Revenant Slayer**', value='```ini\n[ === Level %s === ]\n%s / %s\nCompleted Percentage: %s\n\n[ Tier Kills ]\nTier I    : %s\nTier II   : %s\nTier III  : %s\nTier IV   : %s\n\nTotal Money Spent : %s\n\n[ Next Tier ]\nTier IVs Required : %s\nMoney Required : %s\n```\n' % (str(numberformat.comma(zcurrent_level)), str(numberformat.comma(zcurrent_exp)), str(numberformat.comma(zexptoup)), str(zpercentage_completion), str(zt1k), str(zt2k), str(zt3k), str(zt4k), str(numberformat.comma(zmoney_spent)), str(zt4r), str(zmoney_req)), inline=False)
+	embedVar.add_field(name='**Tarantula Slayer**', value='```ini\n[ === Level %s === ]\n%s / %s\nCompleted Percentage: %s\n\n[ Tier Kills ]\nTier I    : %s\nTier II   : %s\nTier III  : %s\nTier IV   : %s\n\nTotal Money Spent : %s\n\n[ Next Tier ]\nTier IVs Required : %s\nMoney Required : %s\n```\n' % (str(numberformat.comma(tcurrent_level)), str(numberformat.comma(tcurrent_exp)), str(numberformat.comma(texptoup)), str(tpercentage_completion), str(tt1k), str(tt2k), str(tt3k), str(tt4k), str(numberformat.comma(tmoney_spent)), str(tt4r), str(tmoney_req)), inline=False)
+	embedVar.add_field(name='**Sven Slayer**', value='```ini\n[ === Level %s === ]\n%s / %s\nCompleted Percentage: %s\n\n[ Tier Kills ]\nTier I    : %s\nTier II   : %s\nTier III  : %s\nTier IV   : %s\n\nTotal Money Spent : %s\n\n[ Next Tier ]\nTier IVs Required : %s\nMoney Required : %s\n```' % (str(numberformat.comma(wcurrent_level)), str(numberformat.comma(wcurrent_exp)), str(numberformat.comma(wexptoup)), str(wpercentage_completion), str(wt1k), str(wt2k), str(wt3k), str(wt4k), str(numberformat.comma(wmoney_spent)), str(wt4r), str(wmoney_req)), inline=False)
+
+	total_money_spent = zmoney_spent + tmoney_spent + wmoney_spent
+
+	embedVar.add_field(name='**Total Money Spent**', value='```%s```' % (str(numberformat.comma(total_money_spent))))
+
+	await ctx.send(embed=embedVar)
 
 @client.command()
 async def bank(ctx, username=''):
