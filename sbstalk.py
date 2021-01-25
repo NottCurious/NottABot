@@ -239,7 +239,27 @@ def getWolfSlayerData(uuid):
 
 	return [t1_kills, t2_kills, t3_kills, t4_kills, exp, level, numberformat.human_format(moneyspent), levelcompletion, t4r, req_exp, numberformat.human_format(money_req)]
 
-
+def getExpToUp(level):
+	if level == 0:
+		return 5
+	elif level == 1:
+		return 15
+	elif level == 2:
+		return 200
+	elif level == 3:
+		return 1000
+	elif level == 4:
+		return 5000
+	elif level == 5:
+		return 20000
+	elif level == 6:
+		return 100000
+	elif level == 7:
+		return 400000
+	elif level == 8:
+		return 1000000
+	else:
+		return 1
 
 # def getSpiderSlayerData(uuid):
 # def getWolfSlayerData(uuid):

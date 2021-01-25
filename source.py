@@ -321,20 +321,5 @@ async def bank(ctx, username=''):
 
 	await ctx.send(embed=embedVar)
 
-async def loki(ctx):
-	if str(ctx.author) != 'LokiLok#6861':
-		return
-
-	await ctx.send('Loki, I You Best of Luck in Whatever Endeavour You May Chance Upon, You Can Do It!!!!')
-
-async def nott(ctx):
-	if str(ctx.author) != 'NottCurious#4351':
-		return
-
-	await ctx.send('My Lord and Creator Curious, Your Wish Is My Command As I am Your Loyal Servant')
-
-async def expired(ctx):
-	await ctx.send('That Disgraced Goomba Hater Should Not Be Allowed to Make More Statements that can Ruin the Lives of Many!!!!!! #GOOMBALIVESMATTER')
-
 # Execute Commands
 client.run(BOTTOKEN)
