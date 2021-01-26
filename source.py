@@ -487,6 +487,15 @@ async def mt(ctx, username=''):
 	
 	await ctx.send(embed=embedVar)
 
+@client.command()
+async def explain(ctx):
+	if str(ctx.author) != 'NottCurious#4351':
+		return
+
+	await ctx.send('Top 10 Mysteries Science Still Can\t Answer')
+	await ctx.send('1. Is Expired Quitting Skyblock?')
+	await ctx.send('2. Is Expired a Professional TF2 Player?')
+	await ctx.send('3. What the fuck is Market Gardening?')
 
 # Execute Commands
 client.run(BOTTOKEN)
