@@ -30,14 +30,14 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-	Loki Server - General Chat
-  	await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
+	  # # Loki Server - General Chat
+  	# await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
   	
-  	# Private Server
-  	await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
+  	# # Private Server
+  	# await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
   	
-  	# Loki Server - Bot Chat
-  	await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
+  	# # Loki Server - Bot Chat
+  	# await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
 
   	print('Logged in as {0.user}'.format(client))
 
