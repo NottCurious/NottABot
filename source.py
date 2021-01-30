@@ -15,6 +15,7 @@ import zSlayerDetails
 import zAllSBStats
 import zMissingTalismans
 import zPetStuff
+import zDungeonStuff
 
 # Loading Data From .env File
 load_dotenv()
@@ -28,6 +29,7 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
+	print('Bot is Ready')
 
 @client.command()
 async def helpme(ctx):
@@ -507,6 +509,54 @@ async def dung(ctx, username=''):
 		return
 
 	embedVar = discord.Embed(title='Dungeons', description='', color=0x00ff00)
+
+	pclass, secrets_found, pages_found, completed_journals, boss_col = zDungeonStuff.getDungeonData(username)
+
+	embedVar.add_field(name='**Basic Details**', value='```\nSelected Class: %s\nSecrets Found: %s```' % (str(pclass), str(secrets_found)), inline=False)
+	embedVar.add_field(name='**Journal Details**', value='```\nPages Found: %s\nJournals Completed: %s```' % (str(pages_found), str(completed_journals)), inline=False)
+
+	estr = '```\nBonzo: %s\nScarf: %s\nProfessor: %s\nThorn: %s\nLivid: %s\nPlaceholder: %s\nNecron: %s\n```' % (boss_col[0], boss_col[1], boss_col[2], boss_col[3], boss_col[4], boss_col[5], boss_col[6])
+
+	embedVar.add_field(name='**Boss Collections**', value=estr, inline=False)
+
+	await ctx.send(embed=embedVar)
+
+@client.command()
+async def floors(ctx, username=''):
+	if username == '':
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = zSBStalk.getUUID(username)
+
+	if mcuuid == 'no':
+		await ctx.send('No Person Exists With That Username')
+		return
+
+	full_data = zDungeonStuff.getFloorData(username)	
+
+	e = full_data[0]
+	one = full_data[1]
+	two = full_data[2]
+	three = full_data[3]
+	four = full_data[4]
+	five = full_data[5]
+	six = full_data[6]
+	seven = full_data[7]
+
+	embedVar = discord.Embed(title='Best Scores', description='', color=0x00ff00)
+
+	embedVar.add_field(name='**Entrance**', value=zDungeonStuff.makeString(e), inline=False)
+	embedVar.add_field(name='**Floor 1**', value=zDungeonStuff.makeString(one), inline=False)
+	embedVar.add_field(name='**Floor 2**', value=zDungeonStuff.makeString(two), inline=False)
+	embedVar.add_field(name='**Floor 3**', value=zDungeonStuff.makeString(three), inline=False)
+	embedVar.add_field(name='**Floor 4**', value=zDungeonStuff.makeString(four), inline=False)
+	embedVar.add_field(name='**Floor 5**', value=zDungeonStuff.makeString(five), inline=False)
+	embedVar.add_field(name='**Floor 6**', value=zDungeonStuff.makeString(six), inline=False)
+	embedVar.add_field(name='**Floor 7**', value=zDungeonStuff.makeString(seven), inline=False)
+
+	await ctx.send(embed=embedVar)
+
 
 # Execute Commands
 client.run(BOTTOKEN)

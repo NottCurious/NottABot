@@ -21,7 +21,6 @@ def get_wood_prices():
 	    wood_prices.append(data["products"][i]["buy_summary"][0]["pricePerUnit"])
 
 	# Just Some Verbose
-	print("return_wood_prices - get_wood_prices: Wood Prices Function - Wood Prices Received...")
 
 	# Giving the Values To Variables
 	oak_price = str(wood_prices[0])
@@ -33,5 +32,4 @@ def get_wood_prices():
 
 
 	# Returning Values
-	print("return_wood_prices - get_wood_prices: Returned Values")
 	return [oak_price, birch_price, spruce_price, jungle_price, dark_oak_price, acacia_price]
