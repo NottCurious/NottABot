@@ -15,12 +15,10 @@ username = 'NottCurious'
 
 # Getting UUID Using Mojang API
 def getUUID(username):
-	print("sbstalk - getUUID: Receiving Mojang Player Data")
 	try:
 		playerdata_mojang = get("https://api.mojang.com/users/profiles/minecraft/%s" % (username)).json()
 	
 		uuid = playerdata_mojang["id"]
-		print("sbstalk - getUUID: UUID Received")
 
 		return uuid
 	except:
@@ -55,5 +53,3 @@ def getMissingPets(username):
 
 	return pets
 
-# print(getPets(username))
-# print(getMissingPets(username))

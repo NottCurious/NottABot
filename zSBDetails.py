@@ -12,12 +12,10 @@ api_key = os.getenv("API_KEY")
 
 # Getting UUID Using Mojang API
 def getUUID(username):
-	print("sbstalk - getUUID: Receiving Mojang Player Data")
 	try:
 		playerdata_mojang = get("https://api.mojang.com/users/profiles/minecraft/%s" % (username)).json()
 	
 		uuid = playerdata_mojang["id"]
-		print("sbstalk - getUUID: UUID Received")
 
 		return uuid
 	except:
@@ -27,7 +25,6 @@ def getLatestProfile(uuid):
 	# uuid = getUUID(username)
 
 	playerdata = get('https://api.hypixel.net/player?key=%s&uuid=%s' % (api_key, uuid)).json()
-	print('sbstalk - getLatestProfile: Received Data')
 
 	j = 1
 	latest_profile = []
@@ -38,7 +35,6 @@ def getLatestProfile(uuid):
 			latest_profile_id = playerdata['player']['stats']['SkyBlock']['profiles'][i]['profile_id']
 			j += 1
 	
-	print('sbstalk - getLatestProfile: Returning Latest Profile Name and ID')
 	return latest_profile, latest_profile_id
 
 def getCurrentArmor(username):

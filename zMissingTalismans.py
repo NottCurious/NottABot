@@ -15,12 +15,10 @@ api_key = os.getenv("API_KEY")
 
 # Getting UUID Using Mojang API
 def getUUID(username):
-	print("sbstalk - getUUID: Receiving Mojang Player Data")
 	try:
 		playerdata_mojang = get("https://api.mojang.com/users/profiles/minecraft/%s" % (username)).json()
 	
 		uuid = playerdata_mojang["id"]
-		print("sbstalk - getUUID: UUID Received")
 
 		return uuid
 	except:
@@ -43,5 +41,3 @@ def getMissingTalismans(username):
 
 	return missing_talismans
 
-# print(getMissingTalismans('NottCurious'))
-# print(getMissingTalismans('NottCurious'))

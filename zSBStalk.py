@@ -14,12 +14,10 @@ api_key = os.getenv("API_KEY")
 
 # Getting UUID Using Mojang API
 def getUUID(username):
-	print("sbstalk - getUUID: Receiving Mojang Player Data")
 	try:
 		playerdata_mojang = get("https://api.mojang.com/users/profiles/minecraft/%s" % (username)).json()
 	
 		uuid = playerdata_mojang["id"]
-		print("sbstalk - getUUID: UUID Received")
 
 		return uuid
 	except:
@@ -28,28 +26,23 @@ def getUUID(username):
 def getProfileCuteNames(uuid):
 	profs = []
 	playerdata = get('https://api.hypixel.net/player?key=%s&uuid=%s' % (api_key, uuid)).json()
-	print('sbstalk - getProfiles: API Receieved')
 	for i in playerdata['player']['stats']['SkyBlock']['profiles']:
 		profs.append(i)
 
-	print('sbstalk - getProfiles: Returning Profiles')
 	return profs	
 
 def getProfiles(uuid):
 	profs = []
 	playerdata = get('https://api.hypixel.net/player?key=%s&uuid=%s' % (api_key, uuid)).json()
-	print('sbstalk - getProfiles: API Receieved')
 	for i in playerdata['player']['stats']['SkyBlock']['profiles']:
 		profs.append(playerdata['player']['stats']['SkyBlock']['profiles'][i]['cute_name'])
 
-	print('sbstalk - getProfiles: Returning Profiles')
 	return profs
 
 def getLatestProfile(uuid):
 	# uuid = getUUID(username)
 
 	playerdata = get('https://api.hypixel.net/player?key=%s&uuid=%s' % (api_key, uuid)).json()
-	print('sbstalk - getLatestProfile: Received Data')
 
 	j = 1
 	latest_profile = []
@@ -60,7 +53,6 @@ def getLatestProfile(uuid):
 			latest_profile_id = playerdata['player']['stats']['SkyBlock']['profiles'][i]['profile_id']
 			j += 1
 	
-	print('sbstalk - getLatestProfile: Returning Latest Profile Name and ID')
 	return latest_profile, latest_profile_id
 
 
@@ -68,7 +60,6 @@ def getBankBalance(uuid):
 	profile_name, profile_id = getLatestProfile(uuid)
 	sbdata = get('https://api.hypixel.net/skyblock/profile?key=%s&profile=%s' % (api_key, profile_id)).json()
 
-	print('sbstalk - getBankBalance: Received SBData')
 
 	try:
 		bank_money = sbdata['profile']['banking']['balance']
@@ -76,7 +67,6 @@ def getBankBalance(uuid):
 	except:
 		return 'no', 'no'
 
-	print('sbstalk - getBankBalance: Returning Data')
 	return round(bank_money, 2), round(purse, 2)
 
 def formatExp(exp):
@@ -88,14 +78,12 @@ def formatExp(exp):
 		exp -= exptoup[i]
 		i += 1
 
-	print('sbstalk - formatExp: Skills Formatted, Returning Values')
 	return (i if i == 60 else i - 1), exp, exptoup[i]
 
 def getSkills(uuid):
 	profile_name, profile_id = getLatestProfile(uuid)
 	sbdata = get('https://api.hypixel.net/skyblock/profile?key=%s&profile=%s' % (api_key, profile_id)).json()
 
-	print('sbstalk - getSkills: Received Data')
 
 	datap = sbdata['profile']['members'][uuid]
 
@@ -107,7 +95,6 @@ def getSkills(uuid):
 	mining, miningexp, miningtoup = formatExp(round(datap['experience_skill_mining'], 2))
 	fishing, fishingexp, fishingtoup = formatExp(round(datap['experience_skill_fishing'], 2))
 
-	print('sbstalk - getSkills: Returning Requested Data')
 	return [combat, foraging, farming, enchanting, alchemy, mining, fishing], [combatexp, foragingexp, farmingexp, enchantingexp, alchemyexp, miningexp, fishingexp], [combattoup, foragingtoup, farmingtoup, enchantingtoup, alchemytoup, miningtoup, fishingtoup]
 
 def findSkillAverage(uuid):
@@ -118,9 +105,6 @@ def findSkillAverage(uuid):
 	for i in p:
 		sum += i
 
-	print('sbstalk - findSkillAverage: Skill Average Found')
 	return round(sum / 7, 2)
 
 
-# print(getProfiles(getUUID('NottCuriouS')))
-# print(getBankBalance(getUUID('Duokatarina')))
