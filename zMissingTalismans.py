@@ -37,10 +37,11 @@ def getMissingTalismans(username):
 	for i in range(len(data)):
 		tali = data[i]['display_name']
 		if tali == 'Beastmaster Crest':
-			tali = tali + ' ' + data[i]['rarity']
+			tali = tali + ' ' + data[i]['rarity'].capitalize()
 
 		missing_talismans.append(tali)
 
 	return missing_talismans
 
+# print(getMissingTalismans('NottCurious'))
 # print(getMissingTalismans('NottCurious'))

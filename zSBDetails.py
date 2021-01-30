@@ -60,22 +60,3 @@ def getCurrentArmor(username):
 
 
 	return current_armor
-
-
-# print(getCurrentArmor('LokiLok'))
-# print('\n\n')
-# print(getWardrobe('LokiLok'))
-# print('\n\n')
-# print(getCurrentArmor('ExpiredBrainCell'))
-# print('\n\n')
-# print(getWardrobe('ExpiredBrainCell'))
-# print('\n\n')
-# print(getCurrentArmor('Duokatarina'))
-# print('\n\n')
-# print(getWardrobe('Duokatarina'))
-# print('\n\n')
-# print(getCurrentArmor('NottCurious'))
-# print('\n\n')
-# print(getWardrobe('NottCurious'))
-# print('\n\n')
-# print(getCurrentArmor('BlazeFantom'))

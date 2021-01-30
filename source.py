@@ -14,9 +14,7 @@ import zNumberFormat
 import zSlayerDetails
 import zAllSBStats
 import zMissingTalismans
-import keep_alive
-
-keep_alive.keep_alive()
+import zPetStuff
 
 # Loading Data From .env File
 load_dotenv()
@@ -30,15 +28,6 @@ client = commands.Bot(command_prefix = '=')
 # Printing String When Bot Is Ready To Be Used
 @client.event
 async def on_ready():
-	  # # Loki Server - General Chat
-  	# await client.get_channel(791559545519734795).send('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
-  	
-  	# # Private Server
-  	# await client.get_channel(802841895536951306).send ('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
-  	
-  	# # Loki Server - Bot Chat
-  	# await client.get_channel(784965489687658530).send('Bot has Been Updated to v1.4 (Added 3 New Functions and Multiple Changes Improving Speed)')
-
   	print('Logged in as {0.user}'.format(client))
 
 @client.command()
@@ -488,14 +477,56 @@ async def mt(ctx, username=''):
 	await ctx.send(embed=embedVar)
 
 @client.command()
-async def explain(ctx):
-	if str(ctx.author) != 'NottCurious#4351':
+async def pets(ctx, username=''):
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
 		return
 
-	await ctx.send('Top 10 Mysteries Science Still Can\t Answer')
-	await ctx.send('1. Is Expired Quitting Skyblock?')
-	await ctx.send('2. Is Expired a Professional TF2 Player?')
-	await ctx.send('3. What the fuck is Market Gardening?')
+	mcuuid = zSBStalk.getUUID(username)
+
+	if mcuuid == 'no':
+		await ctx.send('No Person Exists With That Username')
+		return
+
+	pets = zPetStuff.getPets(username)
+
+	embedVar = discord.Embed(title='Pets', description='', color=0x00ff00)
+
+	estr = ''
+
+	for i in pets:	
+		estr = estr + str(i) + '\n'
+
+	embedVar.add_field(name='**Pets**', value='```\n' + estr + '```', inline=False)
+
+	await ctx.send(embed=embedVar)	
+
+@client.command()
+async def mp(ctx, username=''):
+	if username == '':
+		print('Exiting Function, Invalid Username')
+		await ctx.send('Enter a Username and Try Again...')
+		return
+
+	mcuuid = zSBStalk.getUUID(username)
+
+	if mcuuid == 'no':
+		await ctx.send('No Person Exists With That Username')
+		return
+
+	pets = zPetStuff.getMissingPets(username)
+
+	embedVar = discord.Embed(title='Pets', description='', color=0x00ff00)
+	
+	estr = ''
+
+	for i in pets:	
+		estr = estr + str(i) + '\n'
+
+	embedVar.add_field(name='**Pets**', value='```\n' + estr + '```', inline=False)
+
+	await ctx.send(embed=embedVar)	
 
 # Execute Commands
 client.run(BOTTOKEN)
