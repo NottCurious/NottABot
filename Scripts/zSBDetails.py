@@ -3,7 +3,7 @@ from requests import get
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import zNumberFormat
+import Scripts.zNumberFormat
 
 # Loading Data From .env File
 load_dotenv()

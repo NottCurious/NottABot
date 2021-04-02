@@ -6,16 +6,16 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Files
-import zReturnWoodPrices
-import zHypixelStalking
-import zSBStalk
-import zSBDetails
-import zNumberFormat
-import zSlayerDetails
-import zAllSBStats
-import zMissingTalismans
-import zPetStuff
-import zDungeonStuff
+import Scripts.zReturnWoodPrices
+import Scripts.zHypixelStalking
+import Scripts.zSBStalk
+import Scripts.zSBDetails
+import Scripts.zNumberFormat
+import Scripts.zSlayerDetails
+import Scripts.zAllSBStats
+import Scripts.zMissingTalismans
+import Scripts.zPetStuff
+import Scripts.zDungeonStuff
 
 # Loading Data From .env File
 load_dotenv()

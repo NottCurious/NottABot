@@ -1,6 +1,6 @@
 # Importing Libraries
 from requests import get
-import zNumberFormat
+import Scripts.zNumberFormat
 from pathlib import Path
 import os
 from dotenv import load_dotenv

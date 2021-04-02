@@ -3,8 +3,8 @@ from requests import get
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import zNumberFormat
-import zSBStalk
+import Scripts.zNumberFormat
+import Scripts.zSBStalk
 
 # Loading Data From .env File
 load_dotenv()
